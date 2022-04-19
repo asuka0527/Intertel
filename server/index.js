@@ -1,11 +1,18 @@
+// import {notFound , errorHandler } from './middleware/errorMiddleware.js'
+
+
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
+
+
 require('dotenv').config()
 
 const db = require('./db')
-const movieRouter = require('./routes/movie-router')
-const orderRouter = require('./routes/order-router')
+
+const orderRouter = require('./routes/orderRouter')
+const itemRouter = require('./routes/itemRouter')
+const errorMiddleware = require('./middleware/errorMiddleware')
 
 
 const app = express()
@@ -21,8 +28,14 @@ app.get('/', (req, res) => {
     res.send('Hello World nodemon!')
 })
 
-app.use('/api', movieRouter)
+// app.use(errorMiddleware.notFound);
+// app.use(errorMiddleware.errorHandler);
+
+
 app.use('/api', orderRouter)
+app.use('/api', itemRouter)
+
+
 
 
 app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`))
